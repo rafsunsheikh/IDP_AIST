@@ -1,0 +1,43 @@
+{% extends 'main.html' %}
+
+{% block content %}
+<!DOCTYPE html>
+<head>
+	<!-- templatemo 419 black white -->
+    <!-- 
+    Black White
+    http://www.templatemo.com/preview/templatemo_419_black_white
+    -->
+	<title>Home</title>
+	<meta name="keywords" content="" />
+	<meta name="description" content="" />
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link href="http://fonts.googleapis.com/css?family=Open+Sans:300,400,700" rel="stylesheet" type="text/css">
+
+	{% load static %}
+	<link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet" type="text/css">
+	<link href="{% static 'css/font-awesome.min.css' %}" rel="stylesheet" type="text/css">
+	<link href="{% static 'css/templatemo_style.css' %}" rel="stylesheet" type="text/css">
+	<style>
+		.home {
+            min-height: 10vh;
+            color:#707070;
+        }
+	</style>
+</head>
+<body>
+	
+	<div class="container">
+		<div class="container home d-flex align-items-center justify-content-center">
+			<article class="templatemo-item">
+				<h2>Camera 1 (Default)</h2>
+				<p><img src="{% url 'video-feed-1' %}" alt="Video Feed 1"></br></br></p>
+		</div>
+				
+	</div>
+		
+</body>
+</html>
+
+{% endblock %}

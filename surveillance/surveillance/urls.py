@@ -15,9 +15,12 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from detection.views import index, video_feed_1, camera_1
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('accounts.urls'))
+    path('', include('accounts.urls')),
+    path('detection/', include('detection.urls')),
+
 
 ]

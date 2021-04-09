@@ -46,9 +46,9 @@ def loginPage(request):
 			if user is not None:
 				login(request, user)
 				if request.user.is_staff:
-					return redirect('/admin')
+					return redirect('admin_page')
 				else:
-					return redirect('home')
+					return redirect('user_page')
 			else:
 				messages.info(request, 'Username OR password is incorrect')
 
@@ -64,4 +64,12 @@ def logoutUser(request):
 def home(request):
 	context={}
 	return render(request, 'accounts/dashboard.html', context)
+
+def admin_page(request):
+	context = {}
+	return render(request, 'accounts/admin_page.html', context)
+
+def user_page(request):
+	context = {}
+	return render(request, 'accounts/user_page.html', context)
 
