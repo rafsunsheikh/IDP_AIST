@@ -3,15 +3,20 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from django.template import RequestContext, loader
 from django.http.response import StreamingHttpResponse
+from django.core.files.base import ContentFile
+from .models import Detection
 
 
 from imutils.video import VideoStream
 from imutils.video import FPS
+from PIL import Image
+from io import BytesIO
 import numpy as np
 import argparse
 import imutils
 import time
 import cv2
+
 
 proto_file = r'C:\Users\MD Rafsun Sheikh\Desktop\IDP_AIST\surveillance\detection\MobileNetSSD_deploy.prototxt.txt'
 caffe_model = r'C:\Users\MD Rafsun Sheikh\Desktop\IDP_AIST\surveillance\detection\MobileNetSSD_deploy.caffemodel'
@@ -29,6 +34,9 @@ def camera_1(request):
 
 # Display camera 1 ------------------------
 def stream_1():
+    file = open(r'C:\Users\MD Rafsun Sheikh\Desktop\IDP_AIST\surveillance\detection\number.txt', 'r')
+    number = int(file.read())
+    file.close()
     # initialize the list of class labels MobileNet SSD was trained to
     # detect, then generate a set of bounding box colors for each class
     CLASSES = ["background", "aeroplane", "bicycle", "bird", "boat",
@@ -89,15 +97,36 @@ def stream_1():
                 label = "{}: {:.2f}%".format(CLASSES[idx],
                    confidence * 100)
                 print("[INFO] {}".format(label))
-                label_to_generate_alarm = CLASSES[idx]
-                if label_to_generate_alarm == "person":
-                    print("Generate Alarm")
 
                 cv2.rectangle(frame, (startX, startY), (endX, endY),
                     COLORS[idx], 2)
                 y = startY - 15 if startY - 15 > 15 else startY + 15
                 cv2.putText(frame, label, (startX, y),
                     cv2.FONT_HERSHEY_SIMPLEX, 0.5, COLORS[idx], 2)
+
+                label_to_generate_alarm = CLASSES[idx]
+                if label_to_generate_alarm == "person":
+                    print("Generate Alarm")
+                    ret, buf = cv2.imencode('.jpg', frame)
+                    content = ContentFile(buf.tobytes())
+                    
+                    result = Detection()
+                    result.name = 'human{}.jpg'.format(number)
+                    # result.image = ('output.jpg', content)
+                    result.image.save('output{}.jpg'.format(number), content)
+                    result.save()
+                    file2 = open(r'C:\Users\MD Rafsun Sheikh\Desktop\IDP_AIST\surveillance\detection\number.txt', 'w')
+                    file2.write(str(number))
+                    file2.close()
+                    
+                    # im_pil = Image.fromarray(frame)
+                    # buffer = BytesIO()
+                    # im_pil.save(buffer, format='png')
+                    # image_png = buffer.getvalue()
+                    # result = cv2.imwrite(r'persons\human{}.png'.format(number), frame)
+                    # result = Detection.objects.create(name = 'human{}.jpg'.format(number), image = image_png)
+                    # result.save()
+                    number += 1
             
         imgencode = cv2.imencode('.jpg', frame)[1]
         stringData = imgencode.tostring()
@@ -126,6 +155,7 @@ def stream_1():
     print("[INFO] approx. FPS: {:.2f}".format(fps.fps()))
 
     # # do a bit of cleanup
+
     cv2.destroyAllWindows()
     vs.stop()
 
