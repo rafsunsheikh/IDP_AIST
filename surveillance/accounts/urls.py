@@ -10,5 +10,9 @@ urlpatterns = [
     path('', views.home, name="home"),
 	path('admin_page', views.admin_page, name = "admin_page"),
 	path('user_page', views.user_page, name = "user_page"),
-	path('tower_feed', detection_views.index, name= "tower-feed")
+	path('tower_feed', detection_views.index, name= "tower-feed"),
+	path('report_data', views.report_data, name = "report-data"),
+	path('photos', views.photos, name = "photos"),
+	path('log_report', views.log_report, name = 'log-report'),
+
 ]

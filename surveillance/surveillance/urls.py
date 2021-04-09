@@ -23,6 +23,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('accounts.urls')),
     path('detection/', include('detection.urls')),
+    path('notification/', include('notification.urls')),
 
 
 ]

@@ -42,7 +42,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'accounts',
-    'detection'
+    'detection',
+    'notification',
 ]
 
 MIDDLEWARE = [
@@ -136,3 +137,10 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static')
 ]
+
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'rafsunsheikh116@gmail.com'
+EMAIL_HOST_PASSWORD = 'barisalcadetcollege1630'
+EMAIL_USE_TLS = True
+EMAIL_USE_SSH = False

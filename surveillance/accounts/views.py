@@ -12,6 +12,7 @@ from django.contrib.auth.decorators import login_required
 # Create your views here.
 from .models import *
 from .forms import *
+from detection.models import *
 
 
 
@@ -72,4 +73,17 @@ def admin_page(request):
 def user_page(request):
 	context = {}
 	return render(request, 'accounts/user_page.html', context)
+
+def report_data(request):
+	context = {}
+	return render(request, 'accounts/report_data.html', context)
+
+def photos(request):
+	photos = Detection.objects.all()
+	return render(request, 'accounts/photos.html', {'photos' : photos})
+
+def log_report(request):
+	logs = Detection.objects.all()
+	return render(request, 'accounts/log_report.html', {'logs' : logs})
+	
 
