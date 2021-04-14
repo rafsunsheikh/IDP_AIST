@@ -5,6 +5,8 @@ from django.template import RequestContext, loader
 from django.http.response import StreamingHttpResponse
 from django.core.files.base import ContentFile
 from .models import Detection
+from notification import views as notification_views
+from time import time
 
 
 from imutils.video import VideoStream
@@ -20,6 +22,8 @@ import cv2
 
 proto_file = r'C:\Users\MD Rafsun Sheikh\Desktop\IDP_AIST\surveillance\detection\MobileNetSSD_deploy.prototxt.txt'
 caffe_model = r'C:\Users\MD Rafsun Sheikh\Desktop\IDP_AIST\surveillance\detection\MobileNetSSD_deploy.caffemodel'
+start_time = 0
+
 #Home Page ---------------------------------
 def index(request):
     template = loader.get_template('index.html')
@@ -34,6 +38,8 @@ def camera_1(request):
 
 # Display camera 1 ------------------------
 def stream_1():
+    global start_time
+    start_time = time.time()
     file = open(r'C:\Users\MD Rafsun Sheikh\Desktop\IDP_AIST\surveillance\detection\number.txt', 'r')
     number = int(file.read())
     file.close()
@@ -107,14 +113,17 @@ def stream_1():
                 label_to_generate_alarm = CLASSES[idx]
                 if label_to_generate_alarm == "person":
                     print("Generate Alarm")
+                    notification()
                     ret, buf = cv2.imencode('.jpg', frame)
                     content = ContentFile(buf.tobytes())
-                    
+
+                    # Saving detection logs to model Detection
                     result = Detection()
                     result.name = 'human{}.jpg'.format(number)
-                    # result.image = ('output.jpg', content)
                     result.image.save('output{}.jpg'.format(number), content)
                     result.save()
+
+                    # Setting image number for next detection
                     file2 = open(r'C:\Users\MD Rafsun Sheikh\Desktop\IDP_AIST\surveillance\detection\number.txt', 'w')
                     file2.write(str(number))
                     file2.close()
@@ -164,11 +173,10 @@ def video_feed_1(request):
     return StreamingHttpResponse(stream_1(), content_type = 'multipart/x-mixed-replace; boundary = frame')
 # ------------------------------------------------------
 
-
-
-
-
-
-
-
-
+def notification():
+    global start_time
+    detection_time_elapsed = False
+    compare_time = time.time()
+    if compare_time - start_time > 300:
+        notification_views.detection_notification()
+        start_time = compare_time
