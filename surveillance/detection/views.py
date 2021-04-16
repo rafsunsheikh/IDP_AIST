@@ -113,7 +113,6 @@ def stream_1():
                 label_to_generate_alarm = CLASSES[idx]
                 if label_to_generate_alarm == "person":
                     print("Generate Alarm")
-                    notification()
                     ret, buf = cv2.imencode('.jpg', frame)
                     content = ContentFile(buf.tobytes())
 
@@ -122,6 +121,7 @@ def stream_1():
                     result.name = 'human{}.jpg'.format(number)
                     result.image.save('output{}.jpg'.format(number), content)
                     result.save()
+                    notification(result, number)
 
                     # Setting image number for next detection
                     file2 = open(r'C:\Users\MD Rafsun Sheikh\Desktop\IDP_AIST\surveillance\detection\number.txt', 'w')
@@ -173,10 +173,10 @@ def video_feed_1(request):
     return StreamingHttpResponse(stream_1(), content_type = 'multipart/x-mixed-replace; boundary = frame')
 # ------------------------------------------------------
 
-def notification():
+def notification(result, number):
     global start_time
     detection_time_elapsed = False
     compare_time = time.time()
-    if compare_time - start_time > 300:
-        notification_views.detection_notification()
+    if compare_time - start_time > 60:
+        notification_views.detection_email_incl_attachment(result, number)
         start_time = compare_time

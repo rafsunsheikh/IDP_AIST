@@ -24,6 +24,7 @@ urlpatterns = [
     path('', include('accounts.urls')),
     path('detection/', include('detection.urls')),
     path('notification/', include('notification.urls')),
+    path('map/', include('map.urls')),
 
 
 ]

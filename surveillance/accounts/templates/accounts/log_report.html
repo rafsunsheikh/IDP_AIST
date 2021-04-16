@@ -34,13 +34,16 @@
 <table id = "log_data">
     <tr>
         <th>Name</th>
+        <th>Detection Date</th>
+        <th>Detection Time</th>
+        <th>Image</th>
     </tr>
     {% for log in logs %}
     <tr> 
         <td>{{ log.name }}</td>
-        <!-- <td>{{ item.field2 }}</td>
-        <td>{{ item.field3 }}</td>
-        <td>{{ item.field4 }}</td> -->
+        <td>{{ log.detection_date }}</td>
+        <td>{{ log.detection_time }}</td>
+        <td>{{ log.image }}</td>
     </tr>
     {% endfor %}
 </table>

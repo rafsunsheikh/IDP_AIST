@@ -63,7 +63,11 @@ div.desc {
         <a target="_blank" href="#">
           <img src="{{photo.image.url}}" alt="" width="600" height="400">
         </a>
-        <div class="desc">{{photo.name}}</div>
+        <div class="desc">{{photo.name}}
+          <p></p>
+          <p>{{photo.detection_date}}</p>
+          <p>{{photo.detection_time}}</p>
+        </div>
       </div>
     </div>
     {% endfor %}
