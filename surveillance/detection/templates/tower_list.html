@@ -1,0 +1,93 @@
+{%  extends 'main.html' %}
+
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+    <title>Document</title>
+    <style>
+        .home {
+            min-height: 10vh;
+            color:#707070;
+        }
+        .any1{
+            margin:10px;
+        }
+        .any{
+            margin: 50px;
+            border: 3px solid #707070;
+            border-radius: 10%;
+        }
+          .button:hover {opacity: 1}
+          
+          .btn-group .button {
+            background-color: #707070; /* Green */
+            border: 1px solid #707070;
+            color: white;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            font-size: 16px;
+            cursor: pointer;
+            width: 200px;
+            display: block;
+            border-radius: 4px;
+            margin: 10px;
+            display: inline-block;
+          }
+          
+          .btn-group .button:not(:last-child) {
+            border-bottom: none; /* Prevent double borders */
+          }
+          
+          .btn-group .button:hover {
+            background-color: #424141;
+          }
+          
+</style>
+</head>
+
+<body>
+    <div class="container">
+    <!-- <div class="container home d-flex align-items-center justify-content-center">
+        <div class="any1 display-2">AI Surveillance Tower</div>
+    </div> -->
+    <!--<div class="container home d-flex align-items-center justify-content-center">
+        <button class="button"><a href="http://127.0.0.1:8000/login"></a>Admin Login</button>
+        <a href="http://127.0.0.1:8000/login" class="button">Admin Login</a>
+
+    </div> -->
+    <div class="container home d-flex align-items-center justify-content-center">
+        <!-- <button class="button"><a href="http://127.0.0.1:8000/login"></a>User Login</button>> -->
+        <!-- <a href="http://127.0.0.1:8000/login" class="button">Login</a> -->
+    </div>
+    <div>
+    {% for tower in towers %}  
+    <div class="btn-group home container d-flex align-items-center justify-content-center">
+        <a href="{% url 'tower' pk_tower=tower.id %}" target="_blank" class="button">{{tower.name}}</a>
+      </div>
+      {% endfor %}
+      <!-- <div class="btn-group home container d-flex align-items-center justify-content-center">
+        <a href="default.asp" target="_blank" class="button">Database</a>
+        <a href="default.asp" target="_blank" class="button">User Management</a>
+        <a href="default.asp" target="_blank" class="button">Error Login Log</a>
+        
+      </div> -->
+      </div>
+    
+</div>
+
+
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+    </body>
+    </html>
+
+{% endblock %}
+

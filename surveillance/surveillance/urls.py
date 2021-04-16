@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from detection.views import index, video_feed_1, camera_1
+from detection.views import index, video_feed, camera_1
 from django.conf import settings
 from django.conf.urls.static import static
 

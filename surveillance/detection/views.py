@@ -7,6 +7,7 @@ from django.core.files.base import ContentFile
 from .models import Detection
 from notification import views as notification_views
 from time import time
+from .models import Tower
 
 
 from imutils.video import VideoStream
@@ -29,6 +30,23 @@ def index(request):
     template = loader.get_template('index.html')
     return HttpResponse(template.render({}, request))
 # ----------------------------------
+#Tower List Page ---------------------------------
+def tower_list(request):
+
+    towers = Tower.objects.all()
+    return render(request, "tower_list.html", {'towers': towers})
+    # template = loader.get_template('tower_list.html')
+    # return HttpResponse(template.render({}, request))
+
+# ----------------------------------
+
+#Tower 1 ---------------------------------
+def tower(request,pk_tower):
+    tower = Tower.objects.get(id=pk_tower)
+    context = {'tower':tower}
+    # template = loader.get_template('tower.html')
+    return render(request,'tower.html',context)
+# ----------------------------------
 
 # Camera 1 ----------------------------
 def camera_1(request):
@@ -37,7 +55,7 @@ def camera_1(request):
 # ------------------------------------
 
 # Display camera 1 ------------------------
-def stream_1():
+def stream(camera_select):
     global start_time
     start_time = time.time()
     file = open(r'C:\Users\MD Rafsun Sheikh\Desktop\IDP_AIST\surveillance\detection\number.txt', 'r')
@@ -169,8 +187,9 @@ def stream_1():
     vs.stop()
 
 
-def video_feed_1(request):
-    return StreamingHttpResponse(stream_1(), content_type = 'multipart/x-mixed-replace; boundary = frame')
+def video_feed(request, pk_video_feed):
+    camera_select = pk_video_feed
+    return StreamingHttpResponse(stream(camera_select), content_type = 'multipart/x-mixed-replace; boundary = frame')
 # ------------------------------------------------------
 
 def notification(result, number):

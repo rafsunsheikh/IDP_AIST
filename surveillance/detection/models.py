@@ -7,3 +7,10 @@ class Detection(models.Model):
     # models.TimeField(auto_now=False, auto_now_add=False, **options)
     image = models.FileField(upload_to = 'images/')
 
+
+class Tower(models.Model):
+    name = models.CharField(max_length=50)
+    location = models.CharField(max_length=200)
+    latitude = models.FloatField()
+    longitude = models.FloatField()
+    

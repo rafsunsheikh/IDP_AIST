@@ -2,33 +2,24 @@ from django.shortcuts import render
 from django.http import HttpResponse
 import folium 
 import pandas as pd
+from detection.models import Tower
 
 # Create your views here.
 
 def index(request):
-    data = pd.read_csv(r"C:\Users\MD Rafsun Sheikh\Desktop\IDP_AIST\surveillance\static\tower_location.csv", encoding = "cp1252")
-
-    latitudes = list(data['Latitude'])
-    longitudes = list(data['Longitude'])
-    names = list(data['Name'])
-    locations = list(data['Location'])
-    links = list(data['Link'])
+    Towers = Tower.objects.all()
 
     fg = folium.FeatureGroup('my map')
 
-    for latitude, longitude, name, location, link in zip(latitudes, longitudes, names, locations, links):
-        fg.add_child(folium.Marker(location=[latitude, longitude], tooltip = name, popup="<b>Name: </b>"+name+ "<br><b>Location: </b>" +location+ "<br><b>Latitude: </b>" +str(latitude)+
-        "<br><b>Longitude: </b>" +str(longitude)+ "<br><b>Go to: </b><a href = "+link+">" +name+ "</a>" , icon = folium.Icon(color="green")))
+    for tower in Towers:
+        url = "/detection/tower/{}".format(tower.id)
+        # url = 'tower' 
+        fg.add_child(folium.Marker(location=[tower.latitude, tower.longitude], tooltip = tower.name, popup="<b>Name: </b>"+tower.name+ "<br><b>Location: </b>" +tower.location+ "<br><b>Latitude: </b>" +str(tower.latitude)+
+        "<br><b>Longitude: </b>" +str(tower.longitude)+ "<br><b>Go to: </b><a href ={}>".format(url) +tower.name+ "</a>" , icon = folium.Icon(color="green")))
 
     m = folium.Map(location=[22.1823184841715, 92.384033203125], 
     zoom_start =12, tiles="Stamen Terrain")
 
-    # tooltip = "Tower 1"
-
-    # folium.Marker([22.30688482518366, 92.54058837890625], 
-    # tooltip=tooltip, popup = "country",
-    # icon = folium.Icon(color = "red", icon = "cloud"),
-    # ).add_to(m)
     m.add_child(fg)
 
     m.add_child(folium.LatLngPopup())
