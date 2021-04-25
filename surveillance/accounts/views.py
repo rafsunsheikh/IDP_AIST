@@ -6,7 +6,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import authenticate, login, logout
 
 from django.contrib import messages
-
+from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 
 # Create your views here.
@@ -17,22 +17,20 @@ from detection.models import *
 
 
 def registerPage(request):
-	if request.user.is_authenticated:
-		return redirect('home')
-	else:
+	if request.user.is_staff:
 		form = CreateUserForm()
 		if request.method == 'POST':
 			form = CreateUserForm(request.POST)
-			if form.is_valid():
-				form.save()
-				user = form.cleaned_data.get('username')
-				messages.success(request, 'Account was created for ' + user)
-
-				return redirect('login')
-			
-
+		if form.is_valid():
+			form.save()
+			user = form.cleaned_data.get('username')
+			messages.success(request, 'Account was created for ' + user)
+			return redirect('login')
 		context = {'form':form}
 		return render(request, 'accounts/register.html', context)
+	else:
+		return redirect('home')
+
 
 def loginPage(request):
 	if request.user.is_authenticated:
@@ -85,5 +83,34 @@ def photos(request):
 def log_report(request):
 	logs = Detection.objects.all()
 	return render(request, 'accounts/log_report.html', {'logs' : logs})
-	
+
+def user_management(request):
+	context = {}
+	return render(request, 'accounts/user_management.html', context)
+
+def all_users(request):
+	users = User.objects.all()
+	return render(request, 'accounts/all_users.html', {'users' : users})
+
+def delete_user(request):
+	users = User.objects.all()
+	return render(request, 'accounts/delete_user.html', {'users' : users})
+
+def delete_user_confirm(request, pk_delete_user):
+	# user = User.objects.get(id = pk_delete_user)
+	# context = {'user' : user}
+	context = {}
+
+	try:
+		user = User.objects.get(id = pk_delete_user)
+		user.delete()
+		context['msg'] = 'The user is deleted'
+	except User.DoesNotExist:
+		context['msg'] = 'User does not exist'
+	except Exception as e:
+		context['msg'] = 'e.message'
+
+	return render(request, 'accounts/delete_user.html', context=context)
+
+
 

@@ -17,8 +17,13 @@ def index(request):
         fg.add_child(folium.Marker(location=[tower.latitude, tower.longitude], tooltip = tower.name, popup="<b>Name: </b>"+tower.name+ "<br><b>Location: </b>" +tower.location+ "<br><b>Latitude: </b>" +str(tower.latitude)+
         "<br><b>Longitude: </b>" +str(tower.longitude)+ "<br><b>Go to: </b><a href ={}>".format(url) +tower.name+ "</a>" , icon = folium.Icon(color="green")))
 
-    m = folium.Map(location=[22.1823184841715, 92.384033203125], 
+# checkpost loop goes here-----------------------
+    fg.add_child(folium.Marker(location=[22.3958, 92.4019], tooltip = "CheckPost 1",  popup="<b>Name: </b> CheckPost1" "<br><b>Location: </b>Bandarban Zone 1" "<br><b>Latitude: </b> 22.3958"
+        "<br><b>Longitude: </b> 92.4019" "</a>" , icon = folium.Icon(color="red")))
+
+    m = folium.Map(location=[22.3958, 92.4019], 
     zoom_start =12, tiles="Stamen Terrain")
+
 
     m.add_child(fg)
 

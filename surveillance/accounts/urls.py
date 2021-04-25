@@ -17,5 +17,9 @@ urlpatterns = [
 	path('photos', views.photos, name = "photos"),
 	path('log_report', views.log_report, name = 'log-report'),
 	path('sitemap', map_views.index, name = 'map'),
+	path('user_management', views.user_management, name = "user-management"),
+	path('all_users', views.all_users, name = "all-users"),
+	path('delete_user', views.delete_user, name = "delete-user"),
+	path('delete_user/<str:pk_delete_user>/', views.delete_user_confirm, name = "delete-user-confirm"),
 
 ]

@@ -78,7 +78,7 @@ def stream(camera_select):
     # cam_id = 0
     # vid = cv2.VideoCapture(cam_id)
     print("[INFO] starting video stream...")
-    vs = VideoStream(src = 0).start()
+    vs = VideoStream(src = int(camera_select)-1).start()
     # vs = VideoStream(usePiCamera=True).start()
     time.sleep(2.0)
     fps = FPS().start()
@@ -196,6 +196,6 @@ def notification(result, number):
     global start_time
     detection_time_elapsed = False
     compare_time = time.time()
-    if compare_time - start_time > 60:
+    if compare_time - start_time > 300:
         notification_views.detection_email_incl_attachment(result, number)
         start_time = compare_time
