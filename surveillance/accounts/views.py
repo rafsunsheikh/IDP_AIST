@@ -97,20 +97,25 @@ def delete_user(request):
 	return render(request, 'accounts/delete_user.html', {'users' : users})
 
 def delete_user_confirm(request, pk_delete_user):
+	user = User.objects.get(id = pk_delete_user)
+
+	return render(request, 'accounts/delete_user_confirm.html', {'user' : user})
+
+def delete_user_success(request, pk_delete_user_success):
 	# user = User.objects.get(id = pk_delete_user)
 	# context = {'user' : user}
-	context = {}
+	# context = {}
 
-	try:
-		user = User.objects.get(id = pk_delete_user)
-		user.delete()
-		context['msg'] = 'The user is deleted'
-	except User.DoesNotExist:
-		context['msg'] = 'User does not exist'
-	except Exception as e:
-		context['msg'] = 'e.message'
+	# try:
+	user = User.objects.get(id = pk_delete_user_success)
+	user.delete()
+	messages.success(request, 'User Deleted Successfully')
+	return redirect('user-management')
+		# context['msg'] = 'The user deleted successfully'
+	# except User.DoesNotExist:
+	# 	context['msg'] = 'User does not exist'
+	# except Exception as e:
+	# 	context['msg'] = 'e.message'
 
-	return render(request, 'accounts/delete_user.html', context=context)
-
-
+	# return render(request, 'accounts/delete_user_confirm.html', context=context)
 

@@ -20,6 +20,7 @@ urlpatterns = [
 	path('user_management', views.user_management, name = "user-management"),
 	path('all_users', views.all_users, name = "all-users"),
 	path('delete_user', views.delete_user, name = "delete-user"),
-	path('delete_user/<str:pk_delete_user>/', views.delete_user_confirm, name = "delete-user-confirm"),
+	path('delete_user_confirm/<str:pk_delete_user>/', views.delete_user_confirm, name = "delete-user-confirm"),
+	path('delete_user_success/<str:pk_delete_user_success>/', views.delete_user_success, name = "delete-user-success"),
 
 ]
