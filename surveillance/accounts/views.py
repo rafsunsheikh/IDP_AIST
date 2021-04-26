@@ -13,9 +13,13 @@ from django.contrib.auth.decorators import login_required
 from .models import *
 from .forms import *
 from detection.models import *
+from notification.views import new_user_notification_email
 
 
-
+def new_user_notification(newusername):
+	user = User.objects.get(username=newusername)
+	userid = int(user.id)
+	new_user_notification_email(userid)
 def registerPage(request):
 	if request.user.is_staff:
 		form = CreateUserForm()
@@ -24,8 +28,11 @@ def registerPage(request):
 		if form.is_valid():
 			form.save()
 			user = form.cleaned_data.get('username')
-			messages.success(request, 'Account was created for ' + user)
-			return redirect('login')
+			notification_user = User.objects.get(username=user)
+			new_user_notification_email(notification_user.id)
+			# new_user_notification(user)
+			messages.success(request, 'Please contact the user to check the email. Account was created for ' + user)
+			return redirect('admin_page')
 		context = {'form':form}
 		return render(request, 'accounts/register.html', context)
 	else:
@@ -110,7 +117,7 @@ def delete_user_success(request, pk_delete_user_success):
 	user = User.objects.get(id = pk_delete_user_success)
 	user.delete()
 	messages.success(request, 'User Deleted Successfully')
-	return redirect('user-management')
+	return redirect('admin_page')
 		# context['msg'] = 'The user deleted successfully'
 	# except User.DoesNotExist:
 	# 	context['msg'] = 'User does not exist'
