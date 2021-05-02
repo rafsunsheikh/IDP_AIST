@@ -133,7 +133,7 @@ def new_user_notification_email(pk_new_user_id):
     # part.set_payload((attachment).read())
     # encoders.encode_base64(part)
     # part.add_header('Content-Disposition', "attachment; filename = " +filename)
-   
+    #send notifications
    
     # msg.attach(part)
     text = msg.as_string()
