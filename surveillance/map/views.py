@@ -13,9 +13,10 @@ def index(request):
 
     for tower in Towers:
         url = "/detection/tower/{}".format(tower.id)
+        blank = "_blank"
         # url = 'tower' 
         fg.add_child(folium.Marker(location=[tower.latitude, tower.longitude], tooltip = tower.name, popup="<b>Name: </b>"+tower.name+ "<br><b>Location: </b>" +tower.location+ "<br><b>Latitude: </b>" +str(tower.latitude)+
-        "<br><b>Longitude: </b>" +str(tower.longitude)+ "<br><b>Go to: </b><a href ={}>".format(url) +tower.name+ "</a>" , icon = folium.Icon(color="green")))
+        "<br><b>Longitude: </b>" +str(tower.longitude)+ "<br><b>Go to: </b><a href ={} target={}>".format(url,blank) +tower.name+ "</a>" , icon = folium.Icon(color="green")))
 
 # checkpost loop goes here-----------------------
     fg.add_child(folium.Marker(location=[22.3958, 92.4019], tooltip = "CheckPost 1",  popup="<b>Name: </b> CheckPost1" "<br><b>Location: </b>Bandarban Zone 1" "<br><b>Latitude: </b> 22.3958"

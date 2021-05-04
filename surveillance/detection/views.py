@@ -19,6 +19,8 @@ import argparse
 import imutils
 import time
 import cv2
+from threading import *
+from time import sleep
 
 
 proto_file = r'C:\Users\MD Rafsun Sheikh\Desktop\IDP_AIST\surveillance\detection\MobileNetSSD_deploy.prototxt.txt'
@@ -131,6 +133,8 @@ def stream(camera_select):
                 label_to_generate_alarm = CLASSES[idx]
                 if label_to_generate_alarm == "person":
                     print("Generate Alarm")
+                    t1 = Generate_alarm()
+                    t1.start()
                     ret, buf = cv2.imencode('.jpg', frame)
                     content = ContentFile(buf.tobytes())
 
@@ -199,3 +203,11 @@ def notification(result, number):
     if compare_time - start_time > 300:
         notification_views.detection_email_incl_attachment(result, number)
         start_time = compare_time
+
+class Generate_alarm(Thread):
+    def run(self):
+        from playsound import playsound
+        path = r'C:\Users\MD Rafsun Sheikh\Desktop\IDP_AIST\surveillance\static\alarms\5.mp3'
+        playsound(path)   
+        sleep(60)  
+
