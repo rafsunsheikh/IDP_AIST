@@ -71,6 +71,7 @@ def detection_email_incl_attachment(result, number):
     "</html></body>", 'html', 'utf-8'))
     # msg.attach(MIMEText(body, 'plain'))
 
+    # filename = r'C:\Users\MD Rafsun Sheikh\Desktop\IDP_AIST\surveillance' + result.image.url
     filename = r'C:\Users\MD Rafsun Sheikh\Desktop\IDP_AIST\surveillance' + result.image.url
     attachment = open(filename, "rb")
 

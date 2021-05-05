@@ -1,14 +1,28 @@
-//library functions used
 arrow==1.0.3
 asgiref==3.3.1
+branca==0.4.2
+certifi==2020.12.5
+chardet==4.0.0
 Django==3.1.7
+folium==0.12.1
+idna==2.10
 imutils==0.5.4
+Jinja2==2.11.3
+MarkupSafe==1.1.1
 numpy==1.20.2
 opencv-contrib-python==4.5.1.48
+pandas==1.2.4
 Pillow==8.2.0
+playsound==1.2.2
 psycopg2==2.8.6
+pycairo==1.20.0
 python-dateutil==2.8.1
 pytz==2021.1
+requests==2.25.1
 six==1.15.0
 sqlparse==0.4.1
+threaded==4.1.0
 times==0.7
+urllib3==1.26.4
+
+pip install -r requirements.txt

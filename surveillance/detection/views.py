@@ -23,8 +23,10 @@ from threading import *
 from time import sleep
 
 
-proto_file = r'C:\Users\MD Rafsun Sheikh\Desktop\IDP_AIST\surveillance\detection\MobileNetSSD_deploy.prototxt.txt'
-caffe_model = r'C:\Users\MD Rafsun Sheikh\Desktop\IDP_AIST\surveillance\detection\MobileNetSSD_deploy.caffemodel'
+# proto_file = r'C:\Users\MD Rafsun Sheikh\Desktop\IDP_AIST\surveillance\detection\MobileNetSSD_deploy.prototxt.txt'
+# caffe_model = r'C:\Users\MD Rafsun Sheikh\Desktop\IDP_AIST\surveillance\detection\MobileNetSSD_deploy.caffemodel'
+proto_file = r'static\MobileNetSSD_deploy.prototxt.txt'
+caffe_model = r'static\MobileNetSSD_deploy.caffemodel'
 start_time = 0
 
 #Home Page ---------------------------------
@@ -60,7 +62,7 @@ def camera_1(request):
 def stream(camera_select):
     global start_time
     start_time = time.time()
-    file = open(r'C:\Users\MD Rafsun Sheikh\Desktop\IDP_AIST\surveillance\detection\number.txt', 'r')
+    # file = open(r'C:\Users\MD Rafsun Sheikh\Desktop\IDP_AIST\surveillance\detection\number.txt', 'r')
     number = int(file.read())
     file.close()
     # initialize the list of class labels MobileNet SSD was trained to
@@ -146,7 +148,8 @@ def stream(camera_select):
                     notification(result, number)
 
                     # Setting image number for next detection
-                    file2 = open(r'C:\Users\MD Rafsun Sheikh\Desktop\IDP_AIST\surveillance\detection\number.txt', 'w')
+                    # file2 = open(r'C:\Users\MD Rafsun Sheikh\Desktop\IDP_AIST\surveillance\detection\number.txt', 'w')
+                    file2 = open(r'static\number.txt', 'w')
                     file2.write(str(number))
                     file2.close()
                     
@@ -207,7 +210,7 @@ def notification(result, number):
 class Generate_alarm(Thread):
     def run(self):
         from playsound import playsound
-        path = r'C:\Users\MD Rafsun Sheikh\Desktop\IDP_AIST\surveillance\static\alarms\5.mp3'
+        path = r'static\alarms\5.mp3'
         playsound(path)   
         sleep(60)  
 
