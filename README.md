@@ -3,6 +3,5 @@
 
 ## License and Copyright
 
-MD. Rafsun Sheikh. Military Institute of Science and Technology.
-
-Licensed under the [MIT License](LICENSE).
+Copyright © 2021, [MD Rafsun Sheikh](https://github.com/rafsunsheikh).
+Released under the [MIT License](LICENSE).
