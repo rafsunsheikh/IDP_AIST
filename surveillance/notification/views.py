@@ -43,7 +43,7 @@ def detection_notification():
     )
 
 def detection_email_incl_attachment(result, number):
-    fromaddr = "rafsunsheikh116@gmail.com"
+    fromaddr = "youremail"
     User = get_user_model()
     users = User.objects.all()
     receivers = []
@@ -85,13 +85,13 @@ def detection_email_incl_attachment(result, number):
     text = msg.as_string()
     server = smtplib.SMTP('smtp.gmail.com', 587)
     server.starttls()
-    server.login(fromaddr, "barisalcadetcollege1630")
+    server.login(fromaddr, "yourpass")
     server.sendmail(fromaddr, receivers, text)
     server.quit()
 
 
 def new_user_notification_email(pk_new_user_id):
-    fromaddr = "rafsunsheikh116@gmail.com"
+    fromaddr = "youremail"
     User = get_user_model()
     user = User.objects.get(id = pk_new_user_id)
     # user = User.objects.get()
@@ -140,6 +140,6 @@ def new_user_notification_email(pk_new_user_id):
     text = msg.as_string()
     server = smtplib.SMTP('smtp.gmail.com', 587)
     server.starttls()
-    server.login(fromaddr, "barisalcadetcollege1630")
+    server.login(fromaddr, "yourpass")
     server.sendmail(fromaddr, receiver, text)
     server.quit()
